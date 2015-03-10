@@ -1,0 +1,61 @@
+#!/bin/bash --login
+# Sets up a development environment inside a vagrant vm
+
+set -e
+
+# cd straight to /vagrant on login
+if ! grep -q 'cd \/vagrant' ~/.bashrc; then
+  echo 'cd /vagrant' >> ~/.bashrc
+fi
+cd /vagrant
+
+# Don't prompt for mysql root password
+export DEBIAN_FRONTEND=noninteractive
+
+# Install packages
+sudo apt-get update --quiet
+sudo -E apt-get install --quiet --assume-yes mysql-server libmysqlclient-dev redis-server git
+
+# Install rvm and ruby
+pattern="^ruby '([0-9\.]+)'$"
+version=$(grep -E "$pattern" Gemfile | sed -E "s/$pattern/\1/g")
+if [[ ! $version ]]; then
+  echo "Can't find ruby version in Gemfile"
+  exit 1
+fi
+if ! rvm use ruby-$version; then
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+  curl -sSL https://get.rvm.io | bash -s stable
+  source ~/.rvm/scripts/rvm
+  rvm install --quiet-curl ruby-$version
+  rvm use ruby-$version
+fi
+
+# Install ruby dependencies
+bundle install
+
+# Configure mysql to use utf-8
+sudo tee /etc/mysql/conf.d/mysqld_unicode.cnf << 'EOF'
+[client]
+default-character-set = utf8
+
+[mysql]
+default-character-set = utf8
+
+[mysqld]
+collation-server = utf8_unicode_ci
+character-set-server = utf8
+init-connect = 'SET NAMES utf8'
+EOF
+
+# Set mysql root password
+mysqladmin -u root password PocketPlay || echo 'mysql password already set'
+
+# Create databases
+mysqladmin -u root --password=PocketPlay create development || echo 'dev database already created'
+
+# Load schema
+rake db:schema:load
+
+# Run the tests
+rspec --format documentation
