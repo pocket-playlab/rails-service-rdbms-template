@@ -19,5 +19,10 @@ development:
 
 test:
   <<: *default
+  <% if ENV['CIRCLECI'] %>
+  database: circle_test
+  username: ubuntu
+  <% else %>
   adapter: sqlite3
   database: ':memory:'
+  <% end %>
