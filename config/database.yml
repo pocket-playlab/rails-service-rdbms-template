@@ -14,8 +14,7 @@ production:
 development:
   <<: *default
   database: development
-  username: playlab
-  password: PocketPlay
+  username: vagrant
   host: localhost
 
 test:

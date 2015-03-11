@@ -32,21 +32,22 @@ fi
 # Install ruby dependencies
 bundle install
 
-# Create database
-echo "CREATE DATABASE development WITH ENCODING 'utf-8' TEMPLATE template0;" |
-  sudo -u postgres psql || echo 'development database already created'
-
-# Create database user
-echo "CREATE USER playlab WITH PASSWORD 'PocketPlay';" |
-  sudo -u postgres psql || echo 'database user already created'
-
-# Allow postgres login with password
+# Allow postgres login from localhost without password
 sudo tee /etc/postgresql/9.3/main/pg_hba.conf << 'EOF'
-local   all             all                                     md5
-host    all             all             127.0.0.1/32            md5
-host    all             all             ::1/128                 md5
+local   all             all                                     trust
+host    all             all             127.0.0.1/32            trust
+host    all             all             ::1/128                 trust
 EOF
 sudo service postgresql restart
+
+# Create database
+psql -U postgres -c \
+  "CREATE DATABASE development WITH ENCODING 'UTF8' TEMPLATE template0;" ||
+  echo 'development database already created'
+
+# Create database user
+psql -U postgres -c "CREATE USER vagrant;" ||
+  echo 'database user already created'
 
 # Load schema
 rake db:schema:load
