@@ -36,5 +36,8 @@ module Passport
 
     # Add unity response middleware
     config.middleware.insert_before 'Rack::Runtime', 'Unity::Middleware::Response'
+
+    # Autoload lib/
+    config.autoload_paths << Rails.root.join('lib')
   end
 end
