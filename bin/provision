@@ -9,12 +9,10 @@ if ! grep -q 'cd \/vagrant' ~/.bashrc; then
 fi
 cd /vagrant
 
-# Don't prompt for mysql root password
-export DEBIAN_FRONTEND=noninteractive
-
 # Install packages
 sudo apt-get update --quiet
-sudo -E apt-get install --quiet --assume-yes mysql-server libmysqlclient-dev redis-server git
+sudo -E apt-get install --quiet --assume-yes \
+  git postgresql libpq-dev redis-server
 
 # Install rvm and ruby
 pattern="^ruby '([0-9\.]+)'$"
@@ -34,25 +32,21 @@ fi
 # Install ruby dependencies
 bundle install
 
-# Configure mysql to use utf-8
-sudo tee /etc/mysql/conf.d/mysqld_unicode.cnf << 'EOF'
-[client]
-default-character-set = utf8
+# Create database
+echo "CREATE DATABASE development WITH ENCODING 'utf-8' TEMPLATE template0;" |
+  sudo -u postgres psql || echo 'development database already created'
 
-[mysql]
-default-character-set = utf8
+# Create database user
+echo "CREATE USER playlab WITH PASSWORD 'PocketPlay';" |
+  sudo -u postgres psql || echo 'database user already created'
 
-[mysqld]
-collation-server = utf8_unicode_ci
-character-set-server = utf8
-init-connect = 'SET NAMES utf8'
+# Allow postgres login with password
+sudo tee /etc/postgresql/9.3/main/pg_hba.conf << 'EOF'
+local   all             all                                     md5
+host    all             all             127.0.0.1/32            md5
+host    all             all             ::1/128                 md5
 EOF
-
-# Set mysql root password
-mysqladmin -u root password PocketPlay || echo 'mysql password already set'
-
-# Create databases
-mysqladmin -u root --password=PocketPlay create development || echo 'dev database already created'
+sudo service postgresql restart
 
 # Load schema
 rake db:schema:load

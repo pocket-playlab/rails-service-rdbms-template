@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.2.1'
 
-gem 'mysql2'
 gem 'newrelic_rpm'
+gem 'pg'
 gem 'puma'
 gem 'rails', '~> 4.2.0'
 gem 'redis'

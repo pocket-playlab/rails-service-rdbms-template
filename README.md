@@ -2,7 +2,7 @@ This is a simple starting point for creating a new rails backend service. It
 includes:
 
 - A `Vagrantfile` and bootstrap script for setting up a development environment
-  - MySQL
+  - PostgreSQL
   - Redis
 - Stripped-down rails base
   - No views
