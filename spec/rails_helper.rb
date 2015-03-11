@@ -44,9 +44,10 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  # Setup test db
+  # Set up in-memory test database
   config.before :suite do
-    load "#{Rails.root}/db/schema.rb"
+    db = Rails.configuration.database_configuration[Rails.env]['database']
+    load "#{Rails.root}/db/schema.rb" if db == ':memory:'
   end
 
   # Reset database after each test
