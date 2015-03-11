@@ -1,5 +1,11 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :exception
+  def self.error_handler(status)
+    lambda do |error|
+      body = { error: error.class.name.demodulize }
+      body.merge! error.extra if error.respond_to? :extra
+      render json: body, status: status
+    end
+  end
+
+  rescue_from StandardError, with: error_handler(:internal_server_error)
 end
