@@ -10,26 +10,13 @@ fi
 cd /vagrant
 
 # Install packages
+sudo apt-add-repository --yes ppa:brightbox/ruby-ng
 sudo apt-get update --quiet
 sudo -E apt-get install --quiet --assume-yes \
-  git postgresql libpq-dev redis-server
-
-# Install rvm and ruby
-pattern="^ruby '([0-9\.]+)'$"
-version=$(grep -E "$pattern" Gemfile | sed -E "s/$pattern/\1/g")
-if [[ ! $version ]]; then
-  echo "Can't find ruby version in Gemfile"
-  exit 1
-fi
-if ! rvm use ruby-$version; then
-  gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
-  curl -sSL https://get.rvm.io | bash -s stable
-  source ~/.rvm/scripts/rvm
-  rvm install --quiet-curl ruby-$version
-  rvm use ruby-$version
-fi
+  git postgresql libpq-dev libsqlite3-dev redis-server ruby2.2 ruby2.2-dev
 
 # Install ruby dependencies
+sudo gem install bundler
 bundle install
 
 # Allow postgres login from localhost without password
