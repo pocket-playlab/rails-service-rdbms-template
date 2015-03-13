@@ -15,6 +15,8 @@ group :test, :development do
 end
 
 group :development do
+  gem 'reek'
+  gem 'rubocop'
   gem 'spring'
 end
 

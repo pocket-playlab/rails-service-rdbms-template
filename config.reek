@@ -1,0 +1,86 @@
+Attribute:
+  enabled: false
+BooleanParameter:
+  enabled: true
+ClassVariable:
+  enabled: true
+ControlParameter:
+  enabled: true
+DataClump:
+  enabled: true
+  max_copies: 2
+  min_clump_size: 2
+DuplicateMethodCall:
+  enabled: true
+  max_calls: 2
+FeatureEnvy:
+  enabled: true
+IrresponsibleModule:
+  enabled: false
+LongParameterList:
+  enabled: true
+  max_params: 3
+  overrides:
+    initialize:
+      max_params: 5
+LongYieldList:
+  enabled: true
+  max_params: 3
+ModuleInitialize:
+  enabled: true
+NestedIterators:
+  enabled: true
+  max_allowed_nesting: 2
+NilCheck:
+  enabled: true
+PrimaDonnaMethod:
+  enabled: true
+RepeatedConditional:
+  enabled: true
+  max_ifs: 2
+TooManyInstanceVariables:
+  enabled: false
+  max_instance_variables: 9
+TooManyMethods:
+  enabled: true
+  max_methods: 25
+TooManyStatements:
+  enabled: true
+  exclude:
+  - initialize
+  max_statements: 5
+UncommunicativeMethodName:
+  enabled: true
+  reject:
+  - !ruby/regexp /^[a-z]$/
+  - !ruby/regexp /[0-9]$/
+  - !ruby/regexp /[A-Z]/
+  accept: []
+UncommunicativeModuleName:
+  enabled: true
+  reject:
+  - !ruby/regexp /^.$/
+  - !ruby/regexp /[0-9]$/
+  accept:
+  - Inline::C
+UncommunicativeParameterName:
+  enabled: true
+  reject:
+  - !ruby/regexp /^.$/
+  - !ruby/regexp /[0-9]$/
+  - !ruby/regexp /[A-Z]/
+  - !ruby/regexp /^_/
+  accept: []
+UncommunicativeVariableName:
+  enabled: true
+  reject:
+  - !ruby/regexp /[0-9]$/
+  - !ruby/regexp /[A-Z]/
+  accept:
+  - _
+  - s3
+UnusedParameters:
+  enabled: false
+UtilityFunction:
+  enabled: true
+  max_helper_calls: 1
