@@ -6,6 +6,7 @@ gem 'pg'
 gem 'puma'
 gem 'rails', '~> 4.2.0'
 gem 'redis'
+gem 'sentry-raven'
 gem 'unity-middleware'
 
 group :test, :development do

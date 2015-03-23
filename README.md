@@ -38,6 +38,7 @@ includes:
 - `REDIS_URL`
 - `NEW_RELIC_APP_NAME`
 - `NEW_RELIC_LICENSE_KEY`
+- `SENTRY_DSN`
 - `WEB_CONCURRENCY` number of puma workers
 - `MAX_THREADS` number of threads per worker
 - `PORT` default: 3000
