@@ -6,6 +6,4 @@ class ApplicationController < ActionController::Base
       render json: body, status: status
     end
   end
-
-  rescue_from StandardError, with: error_handler(:internal_server_error)
 end
