@@ -16,7 +16,7 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc |
   sudo apt-key add -
 sudo apt-add-repository --yes ppa:brightbox/ruby-ng
 sudo apt-get update --quiet
-sudo -E apt-get install --quiet --assume-yes \
+sudo apt-get install --quiet --assume-yes \
   git postgresql-9.4 libpq-dev libsqlite3-dev redis-server ruby2.2 ruby2.2-dev
 
 # Install ruby dependencies
@@ -31,17 +31,12 @@ host    all             all             ::1/128                 trust
 EOF
 sudo service postgresql restart
 
-# Create database
-psql -U postgres -c \
-  "CREATE DATABASE development WITH ENCODING 'UTF8' TEMPLATE template0;" ||
-  echo 'development database already created'
-
 # Create database user
-psql -U postgres -c "CREATE USER vagrant;" ||
+sudo -u postgres createuser --createdb vagrant ||
   echo 'database user already created'
 
 # Load schema
-rake db:schema:load
+rake db:setup
 
 # Run the tests
 rspec --format documentation
