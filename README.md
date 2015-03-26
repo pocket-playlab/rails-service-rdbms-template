@@ -13,6 +13,7 @@ includes:
   - [RSpec](https://github.com/rspec/rspec-rails)
   - [Puma](https://github.com/puma/puma)
   - [RuboCop](https://github.com/bbatsov/rubocop) configuration
+  - [Reek](https://github.com/troessner/reek) configuration
   - [New Relic](http://newrelic.com/) configuration
 
 
@@ -66,7 +67,20 @@ To run a shell inside the container:
 
     ./bin/docker-run bash
 
+#### Style guidelines
+
+Try to follow the [ruby community style guide][ruby-style], and keep your code
+[clean][code-smells]. To check your code for issues, run:
+
+    ./bin/lint
+
+Or:
+
+    ./bin/docker-run bin/lint
+
 
 [compose]:         https://docs.docker.com/compose/
 [install-docker]:  https://docs.docker.com/installation/
 [install-compose]: https://docs.docker.com/compose/install/
+[ruby-style]:      https://github.com/bbatsov/ruby-style-guide
+[code-smells]:     https://github.com/troessner/reek/wiki/Code-Smells
