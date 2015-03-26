@@ -1,0 +1,13 @@
+#!/bin/bash
+case "$@" in
+  -h | --help)
+    echo 'Run the given command inside a docker container.'
+    echo 'If no command is given, run the whole stack.'
+    echo "Usage: $0 <command>"
+    ;;
+  '')
+    docker-compose up
+    ;;
+  *)
+    docker-compose run --rm app "$@"
+esac

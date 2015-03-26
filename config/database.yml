@@ -1,28 +1,25 @@
-default: &default
+development: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
   timeout: 5000
+  host: db
+  username: postgres
+  database: development
 
 production:
   <<: *default
-  database: <%= ENV['DB_NAME'] %>
+  host: <%= ENV['DB_HOST'] %>
   username: <%= ENV['DB_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
-
-development:
-  <<: *default
-  database: development
-  username: vagrant
-  host: localhost
+  database: <%= ENV['DB_NAME'] %>
 
 test:
   <<: *default
   <% if ENV['CIRCLECI'] %>
-  database: circle_test
+  host: localhost
   username: ubuntu
+  database: circle_test
   <% else %>
-  adapter: sqlite3
-  database: ':memory:'
+  database: test
   <% end %>

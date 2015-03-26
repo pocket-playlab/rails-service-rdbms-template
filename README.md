@@ -1,7 +1,8 @@
 This is a simple starting point for creating a new rails backend service. It
 includes:
 
-- A `Vagrantfile` and bootstrap script for setting up a development environment
+- A `Dockerfile` for building a container
+- A `docker-compose.yml` file for setting up a development environment
   - PostgreSQL
   - Redis
 - Stripped-down rails base
@@ -11,7 +12,6 @@ includes:
   - [Unity middleware](https://github.com/pocket-playlab/unity-middleware)
   - [RSpec](https://github.com/rspec/rspec-rails)
   - [Puma](https://github.com/puma/puma)
-  - Tests run in an in-memory sqlite db
   - [RuboCop](https://github.com/bbatsov/rubocop) configuration
   - [New Relic](http://newrelic.com/) configuration
 
@@ -21,13 +21,15 @@ includes:
 
 {{ Project overview }}
 
+
 ### API
 
 {{ Public API documentation }}
 
-### Configuration
 
-{{ Environment variables, etc... }}
+### Deployment
+
+{{ Deploy requirements }}
 
 #### Environment variables
 
@@ -45,3 +47,26 @@ includes:
 - `MAX_THREADS` number of threads per worker
 - `PORT` default: 3000
 - `SECRET_KEY_BASE`
+
+
+### Development
+
+Use [docker-compose][compose] to set up a development environment. The included
+`docker-compose.yml` file describes all containers needed to run the application
+in development. Install [docker][install-docker] and
+[docker-compose][install-compose], then run:
+
+    ./bin/docker-run
+
+To run the tests:
+
+    ./bin/docker-run rspec
+
+To run a shell inside the container:
+
+    ./bin/docker-run bash
+
+
+[compose]:         https://docs.docker.com/compose/
+[install-docker]:  https://docs.docker.com/installation/
+[install-compose]: https://docs.docker.com/compose/install/

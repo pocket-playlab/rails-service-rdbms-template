@@ -1,0 +1,33 @@
+# http://docs.docker.com/compose/yml/
+
+# App container. Uses the production docker image as a
+# base, but mounts the local development directory instead
+# of the code in the container.
+app:
+  build: .
+  volumes:
+    - '.:/home/playlab/app'
+  volumes_from:
+    - data
+  environment:
+    RAILS_ENV: development
+  links:
+    - db
+    - redis
+  ports:
+    - '3000:3000'
+  entrypoint: bin/run
+  command: puma
+
+# Data-only container, used to persist development gems.
+data:
+  build: .
+  command: 'true'
+  volumes:
+    - /home/playlab/ruby
+
+db:
+  image: postgres
+
+redis:
+  image: redis

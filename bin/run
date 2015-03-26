@@ -1,0 +1,6 @@
+#!/bin/bash
+# Install gems, set up databases and run the given command using bundle exec
+set -ex
+bundle install --quiet
+bundle exec rake db:setup &> /dev/null
+exec bundle exec "$@"

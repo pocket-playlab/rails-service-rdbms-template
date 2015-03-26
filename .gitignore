@@ -10,12 +10,6 @@
 /log
 /tmp
 
-# Ignore vagrant vm
-/.vagrant
-
-# Ignore redis dump
-dump.rdb
-
 # Ignore other unneeded files.
 doc/
 *.swp
