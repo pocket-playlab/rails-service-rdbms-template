@@ -1,13 +1,29 @@
 #!/bin/bash
+set -e
+
+function run {
+  log 'Building docker containers'
+  docker-compose build > /dev/null
+  log 'Starting containers'
+  if [[ "$@" == '' ]]; then
+    docker-compose up
+  else
+    docker-compose run --rm app "$@"
+  fi
+}
+
+function log {
+  echo -e "\033[1m-- $@\033[0m"
+}
+
 case "$@" in
   -h | --help)
     echo 'Run the given command inside a docker container.'
     echo 'If no command is given, run the whole stack.'
-    echo "Usage: $0 <command>"
-    ;;
-  '')
-    docker-compose up
+    echo ''
+    echo 'Usage:'
+    echo "  $0 <command>"
     ;;
   *)
-    docker-compose run --rm app "$@"
+    run "$@"
 esac
