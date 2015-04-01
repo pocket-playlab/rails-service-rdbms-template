@@ -11,8 +11,10 @@ app:
     - data
   environment:
     RAILS_ENV: development
+    DB_HOST: database
+    DB_USER: postgres
   links:
-    - db
+    - database
     - redis
   ports:
     - '3000:3000'
@@ -26,7 +28,7 @@ data:
   volumes:
     - /home/playlab/ruby
 
-db:
+database:
   image: postgres
 
 redis:

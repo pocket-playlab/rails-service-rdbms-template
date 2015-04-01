@@ -35,5 +35,5 @@ Rails.application.configure do
   # Don't check for pending migrations, we load the schema before running tests
   config.active_record.migration_error = false
 
-  ENV['REDIS_URL'] = "redis://#{ENV['CIRCLECI'] ? 'localhost' : 'redis'}:6379/1"
+  ENV['REDIS_URL'] ||= 'redis://redis:6379/1'
 end

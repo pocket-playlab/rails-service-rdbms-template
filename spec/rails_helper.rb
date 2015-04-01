@@ -46,24 +46,18 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  # Set up in-memory test database
-  config.before :suite do
-    db = Rails.configuration.database_configuration[Rails.env]['database']
-    load "#{Rails.root}/db/schema.rb" if db == ':memory:'
-  end
-
   # Reset database after each test
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
   end
 
+  config.around :each do |test|
+    DatabaseCleaner.cleaning { test.run }
+  end
+
   # Flush redis before each test
   config.before :each do
     REDIS.flushdb
-  end
-
-  config.around :each do |test|
-    DatabaseCleaner.cleaning { test.run }
   end
 end
