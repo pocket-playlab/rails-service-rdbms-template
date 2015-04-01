@@ -23,6 +23,7 @@ RUN mkdir ${ROOT}
 WORKDIR ${ROOT}
 
 # Install gems
+ENV BUNDLE_APP_CONFIG ${ROOT}/.bundle
 ENV GEM_HOME ${HOME}/ruby/2.2.1
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
