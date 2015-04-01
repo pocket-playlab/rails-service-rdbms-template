@@ -23,7 +23,7 @@ RUN mkdir ${ROOT}
 WORKDIR ${ROOT}
 
 # Install gems
-ENV GEM_HOME ${HOME}/ruby/2.2.0
+ENV GEM_HOME ${HOME}/ruby/2.2.1
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install --deployment --path ${HOME} --without development test
