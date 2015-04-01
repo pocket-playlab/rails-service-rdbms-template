@@ -1,6 +1,8 @@
 #!/bin/bash
 # Install gems, set up databases and run the given command using bundle exec
 set -ex
+bundle config --delete frozen
+bundle config --delete without
 bundle install --quiet
 bundle exec rake db:setup &> /dev/null
 exec bundle exec "$@"
