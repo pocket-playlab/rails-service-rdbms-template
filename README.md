@@ -52,10 +52,24 @@ includes:
 
 ### Development
 
-Use [docker-compose][compose] to set up a development environment. The included
-`docker-compose.yml` file describes all containers needed to run the application
-in development. Install [docker][install-docker] and
-[docker-compose][install-compose], then run:
+You need [docker][] and [docker-compose][]. To install them on OSX run:
+
+    brew install boot2docker docker docker-compose
+
+To start the boot2docker VM you need to run:
+
+    boot2docker init && boot2docker up
+
+Make sure you set the environment variables as described by the `boot2docker up`
+command. To set these environment variables automatically whenever you open a
+new terminal, you can add this line to your `.bash_profile`:
+
+    source <(boot2docker shellinit 2> /dev/null)
+
+The included `docker-compose.yml` file describes all containers needed to run
+the application in development. The `bin/docker-run` script wraps
+`docker-compose`, rebuilding the container on each run. To run the whole
+application:
 
     ./bin/docker-run
 
@@ -66,6 +80,7 @@ To run the tests:
 To run a shell inside the container:
 
     ./bin/docker-run bash
+
 
 #### Style guidelines
 
@@ -79,8 +94,7 @@ Or:
     ./bin/docker-run bin/lint
 
 
-[compose]:         https://docs.docker.com/compose/
-[install-docker]:  https://docs.docker.com/installation/
-[install-compose]: https://docs.docker.com/compose/install/
-[ruby-style]:      https://github.com/bbatsov/ruby-style-guide
-[code-smells]:     https://github.com/troessner/reek/wiki/Code-Smells
+[docker]:         https://github.com/docker/docker
+[docker-compose]: https://github.com/docker/compose
+[ruby-style]:     https://github.com/bbatsov/ruby-style-guide
+[code-smells]:    https://github.com/troessner/reek/wiki/Code-Smells
