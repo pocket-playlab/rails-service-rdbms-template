@@ -56,16 +56,6 @@ You need [docker][] and [docker-compose][]. To install them on OSX run:
 
     brew install boot2docker docker docker-compose
 
-To start the boot2docker VM you need to run:
-
-    boot2docker init && boot2docker up
-
-Make sure you set the environment variables as described by the `boot2docker up`
-command. To set these environment variables automatically whenever you open a
-new terminal, you can add this line to your `.bash_profile`:
-
-    source <(boot2docker shellinit 2> /dev/null)
-
 The included `docker-compose.yml` file describes all containers needed to run
 the application in development. The `bin/docker-run` script wraps
 `docker-compose`, rebuilding the container on each run. To run the whole

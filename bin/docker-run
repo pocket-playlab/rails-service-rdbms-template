@@ -2,6 +2,13 @@
 set -e
 
 function run {
+  if [[ `uname` == 'Darwin' ]]; then
+    log 'Starting boot2docker vm'
+    boot2docker init
+    boot2docker up &> /dev/null
+    log 'Setting boot2docker environment variables'
+    eval "$(boot2docker shellinit 2> /dev/null)"
+  fi
   log 'Building docker containers'
   docker-compose build > /dev/null
   log 'Starting containers'
