@@ -1,4 +1,4 @@
-FROM ruby:2.2-slim
+FROM ruby:2.2.2-slim
 
 # Install dependencies
 RUN apt-get update \
@@ -24,7 +24,7 @@ WORKDIR ${ROOT}
 
 # Install gems
 ENV BUNDLE_APP_CONFIG ${ROOT}/.bundle
-ENV GEM_HOME ${HOME}/ruby/2.2.1
+ENV GEM_HOME ${HOME}/ruby
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN bundle install --deployment --path ${HOME} --without development test
