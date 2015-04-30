@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # Status page
+  get '/status', to: 'status#check'
+
   # Error handlers
   match '/400', via: :all, to: 'errors#bad_request'
   match '/404', via: :all, to: 'errors#not_found'
