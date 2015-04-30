@@ -3,8 +3,8 @@ production: &default
   encoding: unicode
   pool: 5
   timeout: 5000
-  host: <%= ENV['DB_HOST'] %>
-  username: <%= ENV['DB_USER'] %>
+  host: <%= ENV.fetch('DB_HOST') %>
+  username: <%= ENV.fetch('DB_USER') %>
   password: <%= ENV['DB_PASSWORD'] %>
   database: <%= ENV['DB_NAME'] %>
 
