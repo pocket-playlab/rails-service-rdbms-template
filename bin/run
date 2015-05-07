@@ -4,5 +4,7 @@ set -ex
 bundle config --delete frozen
 bundle config --delete without
 bundle install --quiet
-bundle exec rake db:setup &> /dev/null
+for env in development test; do
+  RAILS_ENV=${env} bundle exec rake db:setup &> /dev/null || exit 1
+done
 exec bundle exec "$@"
