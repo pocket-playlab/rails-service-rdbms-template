@@ -5,7 +5,14 @@ RSpec.describe StatusController, type: :controller do
     it 'should render 200 when everything is ok' do
       get :check
       expect(response.status).to eq(200)
-      expect(JSON.parse(response.body)).to eq('errors' => {})
+      expect(JSON.parse(response.body)['errors']).to eq({})
+    end
+
+    it 'should display the current commit hash' do
+      get :check
+      commit = JSON.parse(response.body)['commit']
+      expect(commit).to be_present
+      expect(commit).to_not eq 'unknown'
     end
 
     it 'should render 503 when primary database is not connected' do

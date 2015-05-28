@@ -1,8 +1,20 @@
 class StatusController < ApplicationController
   before_action :run_checks
 
+  class << self
+    def commit
+      @commit ||= begin
+        head = File.read '.git/HEAD'
+        ref = head.match(/^ref: (.+)/)[1]
+        File.read(".git/#{ref}").strip
+      rescue
+        'unknown'
+      end
+    end
+  end
+
   def check
-    render json: { errors: errors }, status: status
+    render json: { commit: self.class.commit, errors: errors }, status: status
   end
 
   private

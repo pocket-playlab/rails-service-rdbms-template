@@ -1,4 +1,4 @@
 .bundle
-.git
+.git/objects
 log
 tmp
