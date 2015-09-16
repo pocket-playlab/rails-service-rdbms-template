@@ -6,7 +6,7 @@
 app:
   build: .
   volumes:
-    - '.:/home/playlab/app'
+    - '.:/usr/src/app'
   volumes_from:
     - data
   environment:
